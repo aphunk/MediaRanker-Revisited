@@ -5,3 +5,15 @@ dan:
 
 kari:
   username: kari
+
+ada:
+  provider: github
+  uid: 12345
+  email: ada@adadevelopersacademy.org
+  username: countess_ada
+
+grace:
+  provider: github
+  uid: 13371337
+  email: grace@hooper.net
+  username: graceful_hopps
