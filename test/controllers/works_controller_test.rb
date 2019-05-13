@@ -37,7 +37,7 @@ describe WorksController do
     it "succeeds when there are works" do
       get works_path
 
-      must_respond_with :success
+      must_respond_with :found
     end
 
     it "succeeds when there are no works" do
@@ -47,7 +47,7 @@ describe WorksController do
 
       get works_path
 
-      must_respond_with :success
+      must_respond_with :found
     end
   end
 
@@ -99,7 +99,7 @@ describe WorksController do
     it "succeeds for an extant work ID" do
       get work_path(existing_work.id)
 
-      must_respond_with :success
+      must_respond_with :found
     end
 
     it "renders 404 not_found for a bogus work ID" do
@@ -242,6 +242,27 @@ describe WorksController do
       
       must_redirect_to work_path(@work.id)
       
+    end
+    
+    describe "Guest Users" do
+      it "lets a guest user see the home page" do
+        user = users(:grace)
+        delete logout_path
+        
+        get root_path
+        
+        must_respond_with :ok
+      end
+    
+      it "redirects to the root page when trying to see a list of works" do
+        user = users(:grace)
+        delete logout_path
+        
+        get works_path
+        
+        must_redirect_to root_path
+        
+      end
     end
   end
 end
