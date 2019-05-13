@@ -245,23 +245,32 @@ describe WorksController do
     end
     
     describe "Guest Users" do
-      it "lets a guest user see the home page" do
+      before do
         user = users(:grace)
         delete logout_path
-        
+      end
+      it "lets a guest user see the home page" do
+ 
         get root_path
         
         must_respond_with :ok
       end
     
       it "redirects to the root page when trying to see a list of works" do
-        user = users(:grace)
-        delete logout_path
-        
+       
         get works_path
         
         must_redirect_to root_path
+        expect(flash[:result_text]).must_equal "You must be logged in to view this section"
+      end
+      
+      it "redirects to the root page when trying to see a work details page" do
+        work = Work.first
         
+        get work_path(work)
+        
+        must_redirect_to root_path
+        expect(flash[:result_text]).must_equal "You must be logged in to view this section"
       end
     end
   end
