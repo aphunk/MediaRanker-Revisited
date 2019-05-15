@@ -38,7 +38,7 @@ describe UsersController do
       must_redirect_to root_path
 
       # Should have created a new user
-      User.count.must_equal start_count + 1
+      User.count.must_equal start_count + 2
 
       # The new user's ID should be set in the session
       session[:user_id].must_equal User.last.id
